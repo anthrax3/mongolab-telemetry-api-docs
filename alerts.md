@@ -29,7 +29,6 @@ POST https://telemetry-api.mongolab.com/loc/v0/alerts
 
 ```
 {
-    _id: ID,
     tags: { 
         TAG_NAME : TAG_VALUE ,
         ... 
@@ -44,11 +43,9 @@ POST https://telemetry-api.mongolab.com/loc/v0/alerts
 }
 ```
 
-* ```_id```: (optional) Unique identifier.  If not provided, one will be automatically created.  If provided, but it
-  conflicts with an existing alert definition, an error will be returned.
-* ```tags```: (optional) User-defined free-form fields.  Tag names must be alphanumeric, may contain hyphens ('-') or underscores ('_'), and must not start with a number.  A tag value can be any string.  A tag's name and value must each comprise fewer than 1024 characters.
-* ```deployment```: Specifies the ID of the root deployment resource (e.g., replica set cluster) to which this alert definition is attached. All servers belonging to this deployment (subject to ```filter```, if given) will produce alert events based on the given ```condition```. 
-* ```filter```: (optional) By default the alert will apply to the deployment and all its constituent resources. If the alert
+* ```tags```: *Object (optional)* — User-defined free-form fields.  Tag names must be alphanumeric, may contain hyphens ('-') or underscores ('_'), and must not start with a number.  A tag value can be any string.  A tag's name and value must each comprise fewer than 1024 characters.
+* ```deployment```: *String* — Specifies the ID of the root deployment resource (e.g., replica set cluster) to which this alert definition is attached. All servers belonging to this deployment (subject to ```filter```, if given) will produce alert events based on the given ```condition```. 
+* ```filter```: *String (optional)* — By default the alert will apply to the deployment and all its constituent resources. If the alert
 only applies to a subset of those resources, a filter may be specified to narrow this scope. The set of available filters currently comprises:
 
     | `filter:` value | nodes selected |
@@ -60,11 +57,11 @@ only applies to a subset of those resources, a filter may be specified to narrow
     | `"SERVER_ROLE_MONGOS"` | Mongos routers (for a sharded cluster) |
 
 
-* ```condition```: Describes the conditions under which the alert should be triggered. For metric alerts, the alerting
+* ```condition```: *Object* — Describes the conditions under which the alert should be triggered. For metric alerts, the alerting
 condition is specified using these fields in a nested structure value:
-    * ```metric```: Specifies the unique ID of the metric to whose values these thresholds will be applied.
-    * ```max```: (optional) the largest "ok" value the metric may take on; if missing or null, no maximum is enforced.
-    * ```min```: (optional) the smallest "ok" value the metric may take on; if missing or null, no minimum is enforced.
+    * ```metric```: *String* — Specifies the unique ID of the metric to whose values these thresholds will be applied.
+    * ```max```: *Number (optional)* — the largest "ok" value the metric may take on; if missing or null, no maximum is enforced.
+    * ```min```: *Number (optional)* — the smallest "ok" value the metric may take on; if missing or null, no minimum is enforced.
     * Note that while both `min` and `max` are optional, at least one of them must be supplied to form a valid condition.
 
 #### response
