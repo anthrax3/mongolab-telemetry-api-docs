@@ -1,4 +1,4 @@
-# Telemetry API : Alert CRUD
+# Alert Definitions CRUD
 
 Using the Telemetry Service, it is possible to create and maintain **alert definitions** : criteria around a metric
 value that you specify for a particular deployment.  (For brevity, we will sometimes use "alert" as a synonym for "alert
@@ -7,24 +7,25 @@ definition" here.)
 For each active alert definition, the Telemetry system will monitor the relevant metric values continuously, and will
 generate notifications whenever that value series goes outside the specified criteria for the resource(s) in that deployment.
 
-This document describes the API for programmatic control of these alert definitions via RESTful HTTPS endpoints.
+This document describes the API for programmatic control of these alert definitions via the RESTful HTTPS endpoint at the following URI :
+
+**<center>https://telemetry-api.mongolab.com/loc/v0/alerts</center>**
+
+Using the standard HTTP request verbs, this endpoint affords the Creation, Retrieval, Update, and Deletion ("CRUD") operations for Alert Definition objects.  Each is described in detail below.
 
 
-### Client authentication : `Telemetry-API-Key` request header
 
-Client authentication is required in the form of an API Key header that must be sent with every HTTPS request: `Telemetry-API-Key`.  
+## Create a new alert definition
 
-The server will verify the validity of the API key string found in this header value, confirm it exists in the set of currently authorized keys, and further verify that the authorization in question permits access to any deployment resources involved in the request or (where applicable) its response.
+To create a new alert definition, **POST** a JSON document describing it.
 
-
-#### Create a new alert definition
-
+#### request
 
 ```
 POST https://telemetry-api.mongolab.com/loc/v0/alerts
 ```
 
-A created alert definition, specified in the request body, has the following structure:
+#### body
 
 ```
 {
@@ -66,47 +67,65 @@ condition is specified using these fields in a nested structure value:
     * ```min```: (optional) the smallest "ok" value the metric may take on; if missing or null, no minimum is enforced.
     * Note that while both `min` and `max` are optional, at least one of them must be supplied to form a valid condition.
 
+#### response
+
 If successful, the response will contain the new alert definition that was created, including an inlined reference to the specified deployment resource, an indication of the notification channel(s) that will be used, and the generated `_id` value if applicable.
 
 
 
-#### Update an existing alert definition
+## Update an existing alert definition
+
+To modify a previously defined alert definition, **PUT** a new JSON document describing it, appending the alert's unique ID as the URI's final path component.
+
+#### request
 
 ```
 PUT https://telemetry-api.mongolab.com/loc/v0/alerts/:id
 ```
 
+#### body
 
-Update an alert definition by sending a **PUT** request with the entire alert definition in the body.  Accordingly, the JSON document in the request body is grammatically identical to the body described for the **POST** endpoint above.  However, two fields are handled specially during an update operation:
+The JSON document in the request body is grammatically identical to the body described for the **POST** endpoint above.  However, two fields are handled specially during an update operation:
 
 Any `_id` field in the request body is **ignored** in favor of the id that appears in the URL.  
 
 The `deployment` field in the body is optional but, if given, must match the deployment information already present in the stored alert definition. That is, an update via **PUT** is not permitted to alter the deployment to which the alert is attached.
 
+#### response
 
 If successful, the response will contain the entire updated alert definition, including the proper `_id` field.  If the specified
 alert definition does not exist, a 404 status will be returned.
 
 
 
-#### Retrieve an alert definition
+## Retrieve an alert definition
+
+To retrieve an alert definition using its unique ID, use a **GET** request, appending the alert's unique ID as the URI's final path component.
+
+
+#### request 
 
 ```
 GET https://telemetry-api.mongolab.com/loc/v0/alerts/:id
 ```
 
-Fetch the alert definition with the given `_id`.  If such an alert exists, it will be included in the response.  If not, a 404 status will be returned.
+#### response
+
+If such an alert exists, it will be included in the response.  If not, a 404 status will be returned.
 
 
-#### Retrieve a group of alert definitions
+
+## Retrieve a group of alert definitions
+
+To retrieve a set of alert definitions matching zero or more constraining query parameters, use a **GET** request with a query string specifying those parameters.
+
+#### request
 
 ```
 GET https://telemetry-api.mongolab.com/loc/v0/alerts?QUERY
 ```
 
-Fetch a set of alert definitions based on zero or more constraining query parameters.
- 
-Optional query parameters:
+#### query parameters
 
 * ```deployment=DEPLOYMENT_ID```: Find alerts that apply to the given deployment ID. To find alerts that do not specify an deployment, use ```deployment=NULL```.  If this parameter is
 omitted, alerts for all deployments (permitted under acess control rules) will be returned.
@@ -114,10 +133,17 @@ omitted, alerts for all deployments (permitted under acess control rules) will b
 alerts that have _all_ indicated tag values will be returned.
 
 
-#### Delete an alert definition
+
+## Delete an alert definition
+
+To delete an alert definition, use a **DELETE** request, appending the alert's unique ID as the URI's final path component.
+
+#### request
 
 ```
 DELETE https://telemetry-api.mongolab.com/loc/v0/alerts/:id
 ```
 
-Delete the alert definition with the given `_id`, if such an alert exists. If not, a 404 status will be returned.
+#### response 
+
+If no such alert exists, a 404 status will be returned.
