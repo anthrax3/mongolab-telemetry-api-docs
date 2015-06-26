@@ -124,7 +124,9 @@ GET https://telemetry-api.mongolab.com/loc/v0/alerts?QUERY
 
 #### query parameters
 
-* ```deployment=DEPLOYMENT_ID```: Find alerts that apply to the given deployment ID. To find alerts that do not specify an deployment, use ```deployment=NULL```.  If this parameter is
+All query parameters are optional.
+
+* ```deployment=DEPLOYMENT_ID```: Find alerts that apply to the given deployment ID. If this parameter is
 omitted, alerts for all deployments (permitted under acess control rules) will be returned.
 * ```tags={"TAG_NAME":"TAG_VALUE", ...}```: Find alerts with the given tag(s).  If multiple tags are specified, only
 alerts that have _all_ indicated tag values will be returned.
