@@ -84,7 +84,7 @@ PUT https://telemetry-api.mongolab.com/loc/v0/alerts/:id
 
 The JSON document in the request body is grammatically identical to the body described for the **POST** endpoint above.  However, two fields are handled specially during an update operation:
 
-Any `_id` field in the request body is **ignored** in favor of the id that appears in the URL.  
+The `_id` field in the request body is optional; however, if included, it must match the id that appears in the URL, or else a client error response code will be returned.  
 
 The `deployment` field in the body is optional but, if given, must match the deployment information already present in the stored alert definition. That is, an update via **PUT** is not permitted to alter the deployment to which the alert is attached.
 
