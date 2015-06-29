@@ -4,5 +4,5 @@ This document summarizes the metrics most commonly seen on MongoLab Telemetry da
 The string in column 1 represents the string that would be used as the `METRIC_ID` in an alert definition.
 
 | Metric ID | Units | Description |
-|--------- |----- |----------- |
+| :--------- | :----- | :----------- |
 | florble | ops/sec | completely fictional |
