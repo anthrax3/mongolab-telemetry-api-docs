@@ -35,7 +35,7 @@ POST https://telemetry-api.mongolab.com/v0/alerts
     },
     deployment: DEPLOYMENT_ID,
     filter: FILTER_ID,
-    notificationChannel: CHANNEL_ID,
+    notificationChannel: CHANNEL_ID | [ CHANNEL_ID, ... ] ,
     condition: { 
         metric: METRIC_ID,
         max: NUMBER,
@@ -58,7 +58,7 @@ only applies to a subset of those resources, a filter may be specified to narrow
     | `"SERVER_ROLE_MONGOS"` | Mongos routers (for a sharded cluster) |
 
 
-* ```channel```: *string (optional)* - the name of the notification channel to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.
+* ```notificationChannel```: *string | string[] (optional)* - the name(s) of the notification channel(s) to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.
 * ```condition```: *object* — Describes the conditions under which the alert should be triggered. For metric alerts, the alerting
 condition is specified using these fields in a nested structure value:
     * ```metric```: *string* — Specifies the unique ID of the metric to whose values these thresholds will be applied.
