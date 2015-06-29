@@ -1,7 +1,7 @@
 # mongolab-telemetry-api-docs
 
 Documents the API for the MongoLab Telemetry Service, 
-accessible at https://telemetry-api.mongolab.com/loc/v0
+accessible at https://telemetry-api.mongolab.com/v0
 
 
 ### Client authentication : `Telemetry-API-Key` request header

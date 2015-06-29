@@ -9,7 +9,7 @@ generate notifications whenever that value series goes outside the specified cri
 
 This document describes the API for programmatic control of these alert definitions via the RESTful HTTPS endpoint at the following URI :
 
-**<center>https://telemetry-api.mongolab.com/loc/v0/alerts</center>**
+**<center>https://telemetry-api.mongolab.com/v0/alerts</center>**
 
 Using the standard HTTP request verbs, this endpoint affords the Creation, Retrieval, Update, and Deletion ("CRUD") operations for Alert Definition objects.  Each is described in detail below.
 
@@ -22,7 +22,7 @@ To create a new alert definition, **POST** a JSON document describing it.
 #### request
 
 ```
-POST https://telemetry-api.mongolab.com/loc/v0/alerts
+POST https://telemetry-api.mongolab.com/v0/alerts
 ```
 
 #### body
@@ -77,7 +77,7 @@ To modify a previously defined alert definition, **PUT** a new JSON document des
 #### request
 
 ```
-PUT https://telemetry-api.mongolab.com/loc/v0/alerts/:id
+PUT https://telemetry-api.mongolab.com/v0/alerts/:id
 ```
 
 #### body
@@ -103,7 +103,7 @@ To retrieve an alert definition using its unique ID, use a **GET** request, appe
 #### request 
 
 ```
-GET https://telemetry-api.mongolab.com/loc/v0/alerts/:id
+GET https://telemetry-api.mongolab.com/v0/alerts/:id
 ```
 
 #### response
@@ -119,7 +119,7 @@ To retrieve a set of alert definitions matching zero or more constraining query 
 #### request
 
 ```
-GET https://telemetry-api.mongolab.com/loc/v0/alerts?QUERY
+GET https://telemetry-api.mongolab.com/v0/alerts?QUERY
 ```
 
 #### query parameters
@@ -140,7 +140,7 @@ To delete an alert definition, use a **DELETE** request, appending the alert's u
 #### request
 
 ```
-DELETE https://telemetry-api.mongolab.com/loc/v0/alerts/:id
+DELETE https://telemetry-api.mongolab.com/v0/alerts/:id
 ```
 
 #### response 
