@@ -61,7 +61,7 @@ only applies to a subset of those resources, a filter may be specified to narrow
 * ```notificationChannel```: *string | string[] (optional)* - the name(s) of the notification channel(s) to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.
 * ```condition```: *object* — Describes the conditions under which the alert should be triggered. For metric alerts, the alerting
 condition is specified using these fields in a nested structure value:
-    * ```metric```: *string* — Specifies the unique ID of the metric to whose values these thresholds will be applied.
+    * ```metric```: *string* — Specifies the unique ID of the metric to whose values these thresholds will be applied. (See the [metrics glossary](metrics-glossary.md) for some common values of this field.)
     * ```max```: *number (optional)* — the largest "ok" value the metric may take on; if missing or null, no maximum is enforced.
     * ```min```: *number (optional)* — the smallest "ok" value the metric may take on; if missing or null, no minimum is enforced.
     * Note that while both `min` and `max` are optional, at least one of them must be supplied to form a valid condition.
