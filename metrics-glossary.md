@@ -5,4 +5,16 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 
 | Metric ID | Units | Description |
 | :--------- | :----- | :----------- |
+| commands | ops/millisecond | Rate of commands |
+| deletes | ops/millisecond | Rate of deletes |
+| getmores | ops/millisecond | Rate of getmores |
 | inserts | ops/millisecond | Rate of inserts |
+| queries | ops/millisecond | Rate of queries |
+| updates | ops/millisecond | Rates of updates |
+| pageFaults | faults/millisecond | Rate of page faults |
+| timeFlushingToDisk | milliseconds | Background flush average |
+| currentConnections | - | Number of open connections |
+| effectiveLockPercentage | percent | Effective lock |
+| operationsWaitingForGlobalLock | Number of operations | Total queued
+| readsWaitingForGlobalLock | Number of operations | Readers queued
+| writesWaitingForGlobalLock | Number of operations | Writers queued
