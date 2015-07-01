@@ -5,4 +5,4 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 
 | Metric ID | Units | Description |
 | :--------- | :----- | :----------- |
-| florble | ops/sec | completely fictional |
+| inserts | ops/millisecond | Inserts (per millisecond) |
