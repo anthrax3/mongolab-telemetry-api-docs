@@ -18,6 +18,6 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | operationsWaitingForGlobalLock | Number of operations | Total queued
 | readsWaitingForGlobalLock | Number of operations | Readers queued
 | writesWaitingForGlobalLock | Number of operations | Writers queued
-| networkBytesOut | bytes/millisecond | Network bytes out
-| networkBytesIn | bytes/millisecond | Network bytes in
+| networkBytesOut | bytes/millisecond | Rate of network bytes out
+| networkBytesIn | bytes/millisecond | Rate of network bytes in
 
