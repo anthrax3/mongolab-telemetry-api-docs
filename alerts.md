@@ -45,7 +45,7 @@ POST https://telemetry-api.mongolab.com/v0/alerts
 ```
 
 * ```tags```: *object (optional)* — User-defined free-form fields.  Tag names must be alphanumeric, may contain hyphens ('-') or underscores ('_'), and must not start with a number.  A tag value can be any string.  A tag's name and value must each comprise fewer than 1024 characters.
-* ```deployment```: *string* — Specifies the ID of the root deployment resource (e.g., replica set cluster) to which this alert definition is attached. All servers belonging to this deployment (subject to ```filter```, if given) will produce alert events based on the given ```condition```. 
+* ```deployment```: *string* — Specifies the ID of the root deployment resource (replica set cluster or sharded cluster) to which this alert definition is attached. All servers belonging to this deployment (subject to ```filter```, if given) will produce alert events based on the given ```condition```. 
 * ```filter```: *string (optional)* — By default the alert will apply to the deployment and all its constituent resources. If the alert
 only applies to a subset of those resources, a filter may be specified to narrow this scope. The set of available filters currently comprises:
 
