@@ -20,10 +20,11 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | writesWaitingForGlobalLock | Number of operations | Writers queued
 | networkBytesOut | bytes/millisecond | Rate of network bytes out
 | networkBytesIn | bytes/millisecond | Rate of network bytes in
-| cpuIOWait | Percent | CPU IOWait
-| cpuSystem | Percent | System CPU
-| cpuUser | Percent | User CPU
+| cpuIOWait* | Percent | CPU IOWait
+| cpuSystem* | Percent | System CPU
+| cpuUser* | Percent | User CPU
 | replicationLag | Milliseconds | Time that secondary is behind primary
 | replicationOplogWindow | Hours | Time between newest and oldest entries in the oplog
 
+* These CPU metrics are currently not normalized to the number of CPU cores on the VM. We will soon be publishing new, normalized CPU metrics that always sum to 100%.
 
