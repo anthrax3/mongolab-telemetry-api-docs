@@ -20,4 +20,8 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | writesWaitingForGlobalLock | Number of operations | Writers queued
 | networkBytesOut | bytes/millisecond | Rate of network bytes out
 | networkBytesIn | bytes/millisecond | Rate of network bytes in
+| cpuIOWait | Percent | CPU IOWait
+| cpuSystem | Percent | System CPU
+| cpuUser | Percent | User CPU
+
 
