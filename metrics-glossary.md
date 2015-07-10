@@ -23,5 +23,7 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | cpuIOWait | Percent | CPU IOWait
 | cpuSystem | Percent | System CPU
 | cpuUser | Percent | User CPU
+| replicationLag | Milliseconds | Time that secondary is behind primary
+| replicationOplogWindow | Hours | Time between newest and oldest entries in the oplog
 
 
