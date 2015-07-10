@@ -12,14 +12,18 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | queries | ops/millisecond | Rate of queries |
 | updates | ops/millisecond | Rates of updates |
 | currentConnections | - | Number of open connections |
-| cpuIOWait* | Percent | CPU IOWait
-| cpuSystem* | Percent | System CPU
-| cpuUser* | Percent | User CPU
+| cpuIOWait* | percent | CPU IOWait
+| cpuSystem* | percent | System CPU
+| cpuUser* | percent | User CPU
 | pageFaults | faults/millisecond | Rate of page faults |
 | effectiveLockPercentage | percent | Effective lock |
-| operationsWaitingForGlobalLock | Number of operations | Total queued
-| readsWaitingForGlobalLock | Number of operations | Readers queued
-| writesWaitingForGlobalLock | Number of operations | Writers queued
+| operationsWaitingForGlobalLock | mumber of operations | Total queued
+| readsWaitingForGlobalLock | number of operations | Readers queued
+| writesWaitingForGlobalLock | number of operations | Writers queued
+| nonMappedVirtualMemory | megabytes | Non-mapped virtual memory
+| totalDataPlusIndexSizeWithoutLocal | bytes | Total size of data plus indexes (without 'local' database)
+| totalFileSizeWithoutLocal | bytes | Total file size (without 'local' database)
+| totalFileSize | bytes | Total file size (includes 'local' database)
 | timeFlushingToDisk | milliseconds | Background flush average |
 | networkBytesOut | bytes/millisecond | Rate of network bytes out
 | networkBytesIn | bytes/millisecond | Rate of network bytes in
