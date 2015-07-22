@@ -1,21 +1,23 @@
 # Alert Definitions CRUD
 
-Using the Telemetry Service, it is possible to create and maintain **alert definitions** : criteria around a metric
+Using the Telemetry Service, it is possible to create and maintain [**alert definitions**](#alert-definitions) : criteria around a metric
 value that you specify for a particular deployment.  (For brevity, we will sometimes use "alert" as a synonym for "alert
 definition" here.)
 
 For each active alert definition, the Telemetry system will monitor the relevant metric values continuously, and will
 generate notifications whenever that value series goes outside the specified criteria for the resource(s) in that deployment.
 
-This document describes the API for programmatic control of these alert definitions via the RESTful HTTPS endpoint at the following URI :
+The receivers of these notifications are defined by [**notification channels**](#notification-channels), which describe email addresses, PagerDuty services, or other points of contact that would be interested in hearing about these alerts.  These channels can be reused by multiple alerts, and each alert may be configured to send notifications to any number of notification channels.
+
+## Alert Definitions
+
+This section describes the API for programmatic control of alert definitions via the RESTful HTTPS endpoint at the following URI :
 
 **<center>https://telemetry-api.mongolab.com/v0/alerts</center>**
 
 Using the standard HTTP request verbs, this endpoint affords the Creation, Retrieval, Update, and Deletion ("CRUD") operations for Alert Definition objects.  Each is described in detail below.
 
-
-
-## Create a new alert definition
+### Create a new alert definition
 
 To create a new alert definition, **POST** a JSON document describing it.
 
@@ -58,7 +60,7 @@ only applies to a subset of those resources, a filter may be specified to narrow
     | `"SERVER_ROLE_MONGOS"` | Mongos routers (for a sharded cluster) |
 
 
-* ```notificationChannel```: *string | string[] (optional)* - the name(s) of the notification channel(s) to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.
+* ```notificationChannel```: *string | string[] (optional)* - the name(s) of the notification channel(s) to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.  See the [Notification Channels](#notification-channels) section below for information on managing the channels in your account.
 * ```condition```: *object* — Describes the conditions under which the alert should be triggered. For metric alerts, the alerting
 condition is specified using these fields in a nested structure value:
     * ```metric```: *string* — Specifies the unique ID of the metric to whose values these thresholds will be applied. (See the [metrics glossary](metrics-glossary.md) for some common values of this field.)
@@ -72,7 +74,7 @@ If successful, the response will contain the new alert definition that was creat
 
 
 
-## Update an existing alert definition
+### Update an existing alert definition
 
 To modify a previously defined alert definition, **PUT** a new JSON document describing it, appending the alert's unique ID as the URI's final path component.
 
@@ -97,7 +99,7 @@ alert definition does not exist, a 404 status will be returned.
 
 
 
-## Retrieve an alert definition
+### Retrieve an alert definition
 
 To retrieve an alert definition using its unique ID, use a **GET** request, appending the alert's unique ID as the URI's final path component.
 
@@ -114,7 +116,7 @@ If such an alert exists, it will be included in the response.  If not, a 404 sta
 
 
 
-## Retrieve a group of alert definitions
+### Retrieve a group of alert definitions
 
 To retrieve a set of alert definitions matching zero or more constraining query parameters, use a **GET** request with a query string specifying those parameters.
 
@@ -135,7 +137,7 @@ alerts that have _all_ indicated tag values will be returned.
 
 
 
-## Delete an alert definition
+### Delete an alert definition
 
 To delete an alert definition, use a **DELETE** request, appending the alert's unique ID as the URI's final path component.
 
@@ -148,3 +150,199 @@ DELETE https://telemetry-api.mongolab.com/v0/alerts/:id
 #### response 
 
 If no such alert exists, a 404 status will be returned.
+
+
+
+## Notification Channels
+
+This section describes the API for programmatic control of notification channels via the RESTful HTTPS endpoint at the following URI :
+
+**<center>https://telemetry-api.mongolab.com/v0/notification-channels</center>**
+
+Using the standard HTTP request verbs, this endpoint affords the Creation, Retrieval, Update, and Deletion ("CRUD") operations for Notification Channel objects.  Each is described in detail below.
+
+
+### Create a new notificaion channel
+
+To create a new notification channel, **POST** a JSON document describing it.
+
+#### request
+
+```
+POST https://telemetry-api.mongolab.com/v0/notification-channels
+```
+
+#### body
+
+```
+{
+    _type: TYPE,
+    displayName: STRING,
+    [ <type-specific fields> ]
+}
+```
+
+* ```_type```: (required) One of ```EmailNotificationChannel```, ```AccountEmailNotificationChannel```,
+ ```PagerDutyNotificationChannel```, or ```HipChatNotificationChannel```
+* ```displayName```: (required) A string description of this channel
+
+Other fields will depend on the value of ```_type```:
+
+##### EmailNotificationChannel
+
+Use this channel to send simple email notifications when an alert is opened or closed.
+
+* ```email```: (required) Email address to send notifications to
+
+Example:
+
+```
+{
+    _type: "EmailNotificationChannel,
+    displayName: "Ops Team",
+    email: "ops@mycompany.com"
+}
+```
+
+##### AccountEmailNotificationChannel
+
+Use this channel to send email notifications to a designated contact in your MongoLab account when an alert is
+opened or closed.  Any changes you make to your MongoLab account contacts will take effect immediately.
+
+* ```recipient```: (required) Account contact to which to send email notifications.  Possible values include:
+```"technicalContact"```, ```"adminUser"```, ```"emergencyContact"```, or ```"billingContact"```
+
+Example:
+
+```
+{
+    _type: "AccountEmailNotificationChannel,
+    displayName: "Technical Contact",
+    recipient: "technicalContact"
+}
+```
+
+##### PagerDutyNotificationChannel
+
+Use this channel to create PagerDuty incidents whenever an alert is triggered.  Any incidents created when an alert
+is triggered will also automatically be resolved when the alert closes.
+
+* ```serviceKey```: (required) PagerDuty service API key (32-digit hexadecimal string)
+
+Example:
+
+```
+{
+    _type: "PagerDutyNotificationChannel,
+    displayName: "Emergency Pager",
+    serviceKey: "1234567890abcdef1234567890abcdef"
+}
+```
+
+##### HipChatNotificationChannel
+
+Use this channel to send messages to a HipChat room whenever an alert is opened or closed.
+
+* ```room```: (required) HipChat room ID to send notifications to (integer)
+* ```authToken```: (required) HipChat auth token to use for authentication (30-digit hexadecimal string).  HipChat group
+admins may create these tokens on the [API Tokens](https://www.hipchat.com/admin/api) page.
+
+Example:
+
+```
+{
+    _type: "HipChatNotificationChannel,
+    displayName: "Developer Chat Room",
+    room: "123456",
+    authToken: "1234567890abcdef1234567890abcd"
+}
+```
+
+#### response
+
+If successful, the response will contain the new notification channel that was created, including a newly generated **_id** value that can be used in alert definitions as well as other notification channel API endpoints.
+
+Example:
+
+```
+{
+    _id: "c-1234567890abcdef12345678",
+    _type: "EmailNotificationChannel,
+    displayName: "Ops Team",
+    email: "ops@mycompany.com"
+}
+```
+
+
+### Update an existing notification channel
+
+To modify a previously defined notification channel, **PUT** a new JSON document describing it, appending the channel's unique ID as the URI's final path component.
+
+#### request
+
+```
+PUT https://telemetry-api.mongolab.com/v0/notification-channels/:id
+```
+
+#### body
+
+the JSON document in the request body is grammatically identical to the body described for the **POST**
+endpoint above.  However, any `_id` field in the request body is **ignored** in favor of the id that appears in the URL.  
+
+#### response
+
+If successful, the response will contain the entire updated notification channel, including the proper `_id` field.
+If the specified channel does not exist, a 404 status will be returned.
+
+
+### Retrieve a notification channel
+
+To retrieve a notification channel using its unique ID, use a **GET** request, appending the channel's unique ID as the URI's final path component.
+
+#### request 
+
+```
+GET https://telemetry-api.mongolab.com/v0/notification-channels/:id
+```
+
+#### response
+
+If such a channel exists, it will be included in the response.  If not, a 404 status will be returned.
+
+
+### Retrieve a group of notification channels
+
+To retrieve a set of notification channels matching zero or more constraining query parameters, use a **GET** request with a query string specifying those parameters.
+
+#### request
+
+```
+GET https://telemetry-api.mongolab.com/v0/notification-channels?QUERY
+```
+
+#### query parameters
+
+All query parameters are optional.
+
+* ```_type=TYPE```: Find notification channels with the given ```_type```.
+* ```displayName=STRING```: Find notification channels with the given ```displayName```.
+* ```email=STRING```: Find EmailNotificationChannels with the given email.
+* ```recipient=STRING```: Find AccountEmailNotificationChannels with the given recipient.
+* ```room=STRING```: Find HipChatNotificationChannels with the given room ID.
+
+NOTE: querying by HipChat authToken or PagerDuty serviceKey are currently not supported.
+
+### Delete a notification channel
+
+To delete an notification channel, use a **DELETE** request, appending the channel's unique ID as the URI's final path component.
+
+#### request
+
+```
+DELETE https://telemetry-api.mongolab.com/v0/notification-channels/:id
+```
+
+#### response 
+
+If no such alert exists, a 404 status will be returned.
+
