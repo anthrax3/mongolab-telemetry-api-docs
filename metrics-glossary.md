@@ -12,9 +12,9 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | queries | ops/millisecond | Rate of queries |
 | updates | ops/millisecond | Rates of updates |
 | currentConnections | - | Number of open connections |
-| cpuIOWait* | percent | CPU IOWait
-| cpuSystem* | percent | System CPU
-| cpuUser* | percent | User CPU
+| cpuIOWaitNorm* | percent | CPU IOWait
+| cpuSystemNorm* | percent | System CPU
+| cpuUserNorm* | percent | User CPU
 | pageFaults | faults/millisecond | Rate of page faults |
 | effectiveLockPercentage | percent | Effective lock |
 | operationsWaitingForGlobalLock | mumber of operations | Total queued
@@ -30,5 +30,5 @@ The string in column 1 represents the string that would be used as the `METRIC_I
 | replicationLag | Milliseconds | Time that secondary is behind primary
 | replicationOplogWindow | Hours | Time between newest and oldest entries in the oplog
 
-* These CPU metrics are currently not normalized to the number of CPU cores on the VM. We will soon be publishing new, normalized CPU metrics that always sum to 100%.
+* These CPU metrics are normalized to the number of CPU cores on the VM and always sum to 100%.
 
