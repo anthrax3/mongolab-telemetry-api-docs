@@ -60,7 +60,7 @@ only applies to a subset of those resources, a filter may be specified to narrow
     | `"SERVER_ROLE_MONGOS"` | Mongos routers (for a sharded cluster) |
 
 
-* ```notificationChannel```: *string | string[] (optional)* - the name(s) of the notification channel(s) to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.  See the [Notification Channels](#notification-channels) section below for information on managing the channels in your account.
+* ```notificationChannel```: *string | string[] (optional)* - the id(s) of the notification channel(s) to which alerts will be sent. If this is not specified, all channels belonging to the API Key's account will receive notifications for this alert.  See the [Notification Channels](#notification-channels) section below for information on managing the channels in your account.
 * ```condition```: *object* — Describes the conditions under which the alert should be triggered. For metric alerts, the alerting
 condition is specified using these fields in a nested structure value:
     * ```metric```: *string* — Specifies the unique ID of the metric to whose values these thresholds will be applied. (See the [metrics glossary](metrics-glossary.md) for some common values of this field.)
@@ -177,14 +177,14 @@ POST https://telemetry-api.mongolab.com/v0/notification-channels
 ```
 {
     _type: TYPE,
-    displayName: STRING,
+    name: STRING,
     [ <type-specific fields> ]
 }
 ```
 
 * ```_type```: (required) One of ```EmailNotificationChannel```, ```AccountEmailNotificationChannel```,
  ```PagerDutyNotificationChannel```, or ```HipChatNotificationChannel```
-* ```displayName```: (required) A string description of this channel
+* ```name```: (required) A string description of this channel
 
 Other fields will depend on the value of ```_type```:
 
@@ -199,7 +199,7 @@ Example:
 ```
 {
     _type: "EmailNotificationChannel,
-    displayName: "Ops Team",
+    name: "Ops Team",
     email: "ops@mycompany.com"
 }
 ```
@@ -217,7 +217,7 @@ Example:
 ```
 {
     _type: "AccountEmailNotificationChannel,
-    displayName: "Technical Contact",
+    name: "Technical Contact",
     recipient: "technicalContact"
 }
 ```
@@ -234,7 +234,7 @@ Example:
 ```
 {
     _type: "PagerDutyNotificationChannel,
-    displayName: "Emergency Pager",
+    name: "Emergency Pager",
     serviceKey: "1234567890abcdef1234567890abcdef"
 }
 ```
@@ -252,7 +252,7 @@ Example:
 ```
 {
     _type: "HipChatNotificationChannel,
-    displayName: "Developer Chat Room",
+    name: "Developer Chat Room",
     room: "123456",
     authToken: "1234567890abcdef1234567890abcd"
 }
@@ -268,7 +268,7 @@ Example:
 {
     _id: "c-1234567890abcdef12345678",
     _type: "EmailNotificationChannel,
-    displayName: "Ops Team",
+    name: "Ops Team",
     email: "ops@mycompany.com"
 }
 ```
@@ -325,7 +325,7 @@ GET https://telemetry-api.mongolab.com/v0/notification-channels?QUERY
 All query parameters are optional.
 
 * ```_type=TYPE```: Find notification channels with the given ```_type```.
-* ```displayName=STRING```: Find notification channels with the given ```displayName```.
+* ```name=STRING```: Find notification channels with the given ```name```.
 * ```email=STRING```: Find EmailNotificationChannels with the given email.
 * ```recipient=STRING```: Find AccountEmailNotificationChannels with the given recipient.
 * ```room=STRING```: Find HipChatNotificationChannels with the given room ID.
