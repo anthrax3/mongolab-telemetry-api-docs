@@ -41,7 +41,8 @@ POST https://telemetry-api.mongolab.com/v0/alerts
     condition: { 
         metric: METRIC_ID,
         max: NUMBER,
-        min: NUMBER
+        min: NUMBER,
+        minCapacitanceInMinutes: NUMBER
     },
 }
 ```
@@ -67,6 +68,7 @@ condition is specified using these fields in a nested structure value:
     * ```max```: *number (optional)* — the largest "ok" value the metric may take on; if missing or null, no maximum is enforced.
     * ```min```: *number (optional)* — the smallest "ok" value the metric may take on; if missing or null, no minimum is enforced.
     * Note that while both `min` and `max` are optional, at least one of them must be supplied to form a valid condition.
+    * ```minCapacitanceInMinutes```: *number (optional)* - the minimum amount of time the metric value must remain continuously outside the set thresholds before an alert is triggered, or remain inside them before a triggered alert may be automatically cleared. The smallest permitted value is 3 minutes, which is also the default if this is not specified.
 
 #### response
 
