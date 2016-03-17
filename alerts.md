@@ -164,7 +164,7 @@ This section describes the API for programmatic control of notification channels
 Using the standard HTTP request verbs, this endpoint affords the Creation, Retrieval, Update, and Deletion ("CRUD") operations for Notification Channel objects.  Each is described in detail below.
 
 
-### Create a new notificaion channel
+### Create a new notification channel
 
 To create a new notification channel, **POST** a JSON document describing it.
 
