@@ -56,6 +56,7 @@ only applies to a subset of those resources, a filter may be specified to narrow
     | --------------- | -------------- |
     | `"SERVER_ROLE_MONGOD_PRIMARY"` | Primary data node(s) |
     | `"SERVER_ROLE_MONGOD_SECONDARY"` | Secondary data node(s) |
+    | `"SERVER_ROLE_MONGOD_ELECTABLE"` | Any electable node |
     | `"SERVER_ROLE_MONGOD_DATA"` | Any data node |
     | `"SERVER_ROLE_CONFIG_MONGOD"` | Config servers (in a sharded cluster) |
     | `"SERVER_ROLE_MONGOS"` | Mongos routers (for a sharded cluster) |
