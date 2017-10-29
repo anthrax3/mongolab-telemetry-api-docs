@@ -1,6 +1,6 @@
 # mongolab-telemetry-api-docs
 
-Documents the API for the MongoLab Telemetry Service, 
+Documents the API for mLab's Telemetry Service, 
 accessible at:
 
 * https://telemetry-api.mlab.com/v0
